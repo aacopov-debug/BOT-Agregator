@@ -12,6 +12,12 @@ from app.models.job import Job
 from app.models.user import User
 from app import models
 from app.database import async_session, engine, Base
+from app.services.parsers import registry
+from app.services.notifier import NotifierService
+from app.services.user_service import UserService
+from app.services.job_service import JobService
+from app.services.digest import send_morning_digest
+from app.services.ai_digest import send_ai_digest
 
 # === Логирование ===
 logger = logging.getLogger()
