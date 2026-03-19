@@ -8,6 +8,7 @@ from app.config import settings
 from app.database import engine, Base
 from app.handlers import register_handlers
 from app.middlewares.throttling import ThrottlingMiddleware
+from app import models
 
 # === Логирование ===
 logger = logging.getLogger()
