@@ -2,7 +2,6 @@
 
 import asyncio
 import logging
-import aiohttp
 from .base import BaseParser, registry
 from ..job_service import JobService
 from ...utils.categorizer import detect_category
@@ -42,7 +41,7 @@ class HHParser(BaseParser):
             await asyncio.sleep(self.request_delay)
         return total_new
 
-    async def _fetch_vacancies(self, query: str, per_page: int = 20) -> list:
+    async def _fetch_vacancies(self, query: str, per_page: int = 10) -> list:
         params = {
             "text": query,
             "per_page": per_page,
@@ -51,37 +50,15 @@ class HHParser(BaseParser):
         }
         headers = {"User-Agent": "TelegramJobBot/1.0"}
 
-        for attempt in range(3):
-            try:
-                proxy = self._get_proxy()
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(
-                        self.api_url,
-                        params=params,
-                        headers=headers,
-                        proxy=proxy,
-                        timeout=aiohttp.ClientTimeout(total=15),
-                    ) as resp:
-                        if resp.status == 429:
-                            wait = 5 * (attempt + 1)
-                            logger.warning(
-                                f"hh.ru rate limit, ждём {wait}с... (Proxy: {proxy})"
-                            )
-                            await asyncio.sleep(wait)
-                            continue
-                        if resp.status != 200:
-                            logger.warning(
-                                f"hh.ru API: HTTP {resp.status} (Proxy: {proxy})"
-                            )
-                            return []
-                        data = await resp.json()
-                break
-            except Exception as e:
-                logger.error(f"hh.ru fetch error: {e}")
-                return []
-        else:
+        data = await self._request_with_retry(
+            "GET", self.api_url, params=params, headers=headers
+        )
+        if not data or not isinstance(data, dict):
             return []
 
+        return self._parse_items(data)
+
+    def _parse_items(self, data: dict) -> list:
         jobs = []
         for item in data.get("items", []):
             salary_text = ""

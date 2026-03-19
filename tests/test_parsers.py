@@ -41,7 +41,7 @@ async def test_hh_parser_logic(db_session):
     # Подменяем HTTP-запрос с помощью кастомного класса-контекст менеджера
     mock_get = MagicMock(return_value=MockResponse(mock_response_data, status=200))
 
-    with patch("aiohttp.ClientSession.get", mock_get):
+    with patch("aiohttp.ClientSession.request", mock_get):
         added_count = await parser.parse(job_service)
 
     # Проверяем, что парсер вернул 1 успешное добавление

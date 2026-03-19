@@ -29,6 +29,20 @@ services:
     networks:
       - bot_network
 
+  dashboard:
+    build: .
+    container_name: job_aggregator_dashboard
+    command: python web_dashboard.py
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./jobs.db:/app/jobs.db
+    networks:
+      - bot_network
+
 networks:
   bot_network:
     driver: bridge

@@ -45,6 +45,7 @@ async def scraper_task():
 
     async def safe_run(parser):
         async with async_session() as session:
+            from app.services.parsers.base import ParserBlockError, ParserError
             from app.services.stats_service import StatsService
 
             stats_service = StatsService(session)
@@ -55,6 +56,12 @@ async def scraper_task():
                 log.info(f"✅ {parser_name}: +{count}")
                 await stats_service.update_parser_stats(parser_name, count, status="OK")
                 return count, "OK"
+            except ParserBlockError as e:
+                log.error(f"🚫 {parser_name} is BLOCKED: {e}")
+                await stats_service.update_parser_stats(
+                    parser_name, 0, status="BAN", error=str(e)
+                )
+                return 0, "BAN"
             except Exception as e:
                 log.error(f"❌ Error in {parser_name}: {e}")
                 err_str = str(e)
