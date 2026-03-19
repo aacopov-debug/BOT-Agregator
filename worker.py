@@ -64,8 +64,10 @@ async def scraper_task():
                 )
                 return 0, status
 
-    tasks = [safe_run(p) for p in parsers]
-    results = await asyncio.gather(*tasks)  # List of (count, status)
+    results = []
+    for p in parsers:
+        res = await safe_run(p)
+        results.append(res)
 
     total = sum(r[0] for r in results)
     failed_count = sum(1 for r in results if r[1] != "OK")

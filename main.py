@@ -30,8 +30,8 @@ async def main():
     bot = Bot(token=settings.BOT_TOKEN)
     dp = Dispatcher(storage=MemoryStorage())
     
-    # Подключаем анти-спам
-    dp.message.middleware(ThrottlingMiddleware(rate_limit=2))
+    # Подключаем анти-спам (отключаем для ускорения на текущем сервере)
+    # dp.message.middleware(ThrottlingMiddleware(rate_limit=2))
     
     register_handlers(dp)
 
