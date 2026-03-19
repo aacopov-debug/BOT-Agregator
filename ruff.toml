@@ -1,0 +1,1 @@
+exclude = [".agent", "venv", ".venv", "alembic", ".ruff_cache", ".vscode", "__pycache__"]

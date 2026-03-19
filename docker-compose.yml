@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  bot:
+    build: .
+    container_name: job_aggregator_bot
+    command: python main.py
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./jobs.db:/app/jobs.db
+      - ./user_session.session:/app/user_session.session
+      - ./data:/app/data
+    networks:
+      - bot_network
+
+  worker:
+    build: .
+    container_name: job_aggregator_worker
+    command: python worker.py
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./jobs.db:/app/jobs.db
+      - ./user_session.session:/app/user_session.session
+      - ./data:/app/data
+    networks:
+      - bot_network
+
+networks:
+  bot_network:
+    driver: bridge

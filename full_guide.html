@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документация: IT Job Aggregator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #007AFF;
+            --dark: #1D1D1F;
+            --text: #333;
+            --bg: #F5F5F7;
+            --card: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card);
+            padding: 60px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        h1 { font-size: 42px; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+        h2 { font-size: 28px; font-weight: 600; color: var(--dark); margin-top: 40px; border-bottom: 2px solid var(--bg); padding-bottom: 10px; }
+        h3 { font-size: 22px; font-weight: 600; color: var(--primary); margin-top: 30px; }
+
+        .badge {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .roadmap-item {
+            border-left: 3px solid var(--primary);
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+
+        .command-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .command-table th, .command-table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--bg);
+        }
+
+        .command-table th { background: var(--bg); color: var(--dark); font-weight: 600; }
+
+        .premium-box {
+            background: linear-gradient(135deg, #007AFF, #00C7FF);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-top: 40px;
+        }
+
+        code { background: #F0F0F0; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 0; border-radius: 0; width: 100%; max-width: 100%; }
+            .no-print { display: none; }
+            .btn-print { display: none; }
+        }
+
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .btn-print:hover { transform: scale(1.05); background: var(--primary); }
+    </style>
+</head>
+<body>
+
+    <button class="btn-print no-print" onclick="window.print()">Скачать PDF / Печать</button>
+
+    <div class="container">
+        <span class="badge">Official Documentation</span>
+        <h1>IT Job Aggregator Bot</h1>
+        <p style="font-size: 18px; color: #666;">Полное руководство пользователя и администратора • v1.0 Ready</p>
+
+        <h2>🗺 Дорожная карта (Roadmap)</h2>
+        <div class="roadmap-item"><strong>Фазы 1-4:</strong> Сбор из 9 источников, AI Scoring (Gemini), Озвучка ElevenLabs и AI-Интервью.</div>
+        <div class="roadmap-item"><strong>Фазы 5-6:</strong> Монетизация (YooMoney/Stars), Рефералки и Стрики удержания.</div>
+        <div class="roadmap-item"><strong>Фазы 7-8:</strong> Docker, Прокси-ротация и финальная юридическая полировка.</div>
+
+        <h2>🕹 Интерфейс и Хабы</h2>
+        
+        <h3>🔍 Поиск и Вакансии</h3>
+        <ul>
+            <li><strong>Все вакансии</strong> — доступ ко всей базе (листалка).</li>
+            <li><strong>Горячие (24ч)</strong> — только за последние сутки.</li>
+            <li><strong>Подписки</strong> — уведомления о новых матчах.</li>
+        </ul>
+
+        <h3>🤖 AI Помощник</h3>
+        <ul>
+            <li><strong>AI-Интервью</strong> — Ваш персональный HR-тренер.</li>
+            <li><strong>Matching</strong> — оценка твоего резюме (0-100%).</li>
+            <li><strong>Cover Letter</strong> — авто-создание откликов.</li>
+        </ul>
+
+        <h2>⌨️ Перечень Команд</h2>
+        <table class="command-table">
+            <thead>
+                <tr><th>Команда</th><th>Описание</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>/start</code></td><td>Главное меню</td></tr>
+                <tr><td><code>/premium</code></td><td>Тарифы и оплата</td></tr>
+                <tr><td><code>/promo_gen</code></td><td>(Админ) Пост для рекламы</td></tr>
+                <tr><td><code>/stats</code></td><td>(Админ) Здоровье парсеров</td></tr>
+            </tbody>
+        </table>
+
+        <div class="premium-box">
+            <h2 style="margin-top: 0; color: white; border: none;">💎 Преимущества PREMIUM</h2>
+            <p>Безлимитные просмотры, приоритетные уведомления, бесплатный доступ ко всем AI-фишкам и экспорт избранного в PDF/HTML без ограничений.</p>
+        </div>
+
+        <p style="text-align: center; margin-top: 60px; color: #999; font-size: 14px;">
+            © 2026 IT Job Aggregator Bot • Документация для Armen
+        </p>
+    </div>
+
+</body>
+</html>
