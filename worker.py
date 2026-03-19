@@ -8,15 +8,10 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from sqlalchemy import delete, select, func
 
 from app.config import settings
-from app.database import async_session
-from app.services.parsers import registry
-from app.services.notifier import NotifierService
-from app.services.user_service import UserService
-from app.services.job_service import JobService
-from app.services.digest import send_morning_digest
-from app.services.ai_digest import send_ai_digest
 from app.models.job import Job
 from app.models.user import User
+from app import models
+from app.database import async_session, engine, Base
 
 # === Логирование ===
 logger = logging.getLogger()
@@ -249,7 +244,12 @@ async def daily_flush_task():
 
 async def main():
     global bot, notifier
-    log.info("🚀 Worker started")
+    log.info("🚀 Worker starting...")
+
+    # Создание таблиц, если их нет
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    log.info("✅ Database ready")
 
     bot = Bot(token=settings.BOT_TOKEN)
     notifier = NotifierService(bot)
