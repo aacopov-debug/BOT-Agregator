@@ -8,21 +8,11 @@ from aiogram.fsm.state import State, StatesGroup
 from sqlalchemy import Column, Integer, BigInteger, String, DateTime, Boolean
 from sqlalchemy.sql import func
 from sqlalchemy import select
-from ...database import Base, async_session
+from ...database import async_session
+from ...models.reminder import Reminder
 
 logger = logging.getLogger(__name__)
 router = Router()
-
-
-class Reminder(Base):
-    __tablename__ = "reminders"
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    user_telegram_id = Column(BigInteger, nullable=False, index=True)
-    text = Column(String(500), nullable=False)
-    remind_at = Column(DateTime(timezone=True), nullable=False)
-    job_id = Column(Integer, default=None)
-    sent = Column(Boolean, default=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 
 class ReminderState(StatesGroup):
