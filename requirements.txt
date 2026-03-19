@@ -21,3 +21,4 @@ yoomoney
 telethon
 httpx
 aiofiles
+cachetools
